@@ -1,11 +1,14 @@
 # Instruction
 
-*Replace everything below with your own instruction. Keep each version — do not overwrite.*
+*Keep each version — do not overwrite.*
 
 ## Version 2
 
-<!-- Paste version two here, exactly as you wrote it by hand in session 1.
-     Do not improve it on the way in. -->
+Parallel wavy lines of different colors going from left to right, located at the top part of the page.
+
+A triangle, a rectangle and a circle of different colors located slightly above the center of the page. All shapes are overlapping.
+
+An array of multiple lines, evenly spaced, extending from the lowest point of the circle to the bottom edge of the page. The lines are evenly spaced. The first line touches the bottom left corner of the page and the last line touches the bottom right corner of the page. At the bottom of the page, a single row of circles is drawn where each circle is between two lines.
 
 ## Version 3 — optional
 
