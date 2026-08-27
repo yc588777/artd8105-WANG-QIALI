@@ -466,6 +466,23 @@
       ].join("\n");
     }
 
+    function applyQuery() {
+      const q = new URLSearchParams(location.search);
+      ids.forEach((id) => {
+        if (q.has(id)) $(id).value = q.get(id);
+      });
+    }
+
+    function svgFileText() {
+      const svg = $("art").cloneNode(true);
+      svg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+      svg.setAttribute("width", "420mm");
+      svg.setAttribute("height", "594mm");
+      const comment = document.createComment("\n" + $("valueSheet").textContent + "\n");
+      svg.insertBefore(comment, svg.firstChild);
+      return '<?xml version="1.0" encoding="UTF-8"?>\n' + svg.outerHTML;
+    }
+
     ids.forEach((id) => $(id).addEventListener("input", draw));
     $("seedNew").addEventListener("click", () => {
       $("seed").value = String(1 + Math.floor(Math.random() * 9998));
@@ -473,14 +490,7 @@
     });
     $("download").addEventListener("click", () => {
       const p = readParams();
-      const svg = $("art").cloneNode(true);
-      svg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-      svg.setAttribute("width", "420mm");
-      svg.setAttribute("height", "594mm");
-      const comment = document.createComment("\n" + $("valueSheet").textContent + "\n");
-      svg.insertBefore(comment, svg.firstChild);
-      const text = '<?xml version="1.0" encoding="UTF-8"?>\n' + svg.outerHTML;
-      const blob = new Blob([text], { type: "image/svg+xml" });
+      const blob = new Blob([svgFileText()], { type: "image/svg+xml" });
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
       a.download = `wang-qiali_seed-${p.seed}_waves-${p.waveCount}_fan-${p.fanCount}.svg`;
@@ -488,7 +498,12 @@
       URL.revokeObjectURL(a.href);
     });
 
+    applyQuery();
     draw();
+
+    if (new URLSearchParams(location.search).get("bare") === "1") {
+      document.documentElement.innerHTML = svgFileText().replace(/^<\?xml[^>]*>\s*/u, "");
+    }
   </script>
 </body>
 </html>

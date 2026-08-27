@@ -1,0 +1,121 @@
+ARTD8105 · Session 2 prints
+
+标题 / Title
+平行波线、重叠三形、底边扇形
+Parallel waves, overlapping shapes, bottom fan
+（描述性暂用题，不是诗意命名。若要改展签标题，告诉我你的题目。）
+(Descriptive working title, not a poetic name. Say if you want a different wall-label title.)
+
+作者 / Name
+汪俏黎
+WANG QIALI
+
+指令版本 / Instruction version
+Version 2
+
+后处理 / Post-processing
+无。纸上每一笔都来自生成器。
+None. Every mark on the sheet comes from the generator.
+
+说明 / Note
+三张图是同一 seed（1）下、你已写下的范围的三个位置：默认 / 最小 / 最大。
+不是另选的“好看”组合。若你不要其中一张，指出要换哪一端。
+Three sheets, same seed (1), three positions in the ranges you already named: default / minimum / maximum.
+Not a taste selection. If you reject one, say which end to replace.
+
+————————————————————————————————————————
+01_a2_default.svg
+A2 · 你写下的默认值（参数空间的中心）
+A2 · your stated defaults (centre of the parameter space)
+  seed: 1
+  waveCount: 7
+  waveAmplitude: 2.0
+  waveCycles: 4
+  waveBand: 15.0
+  groupX: 50.0
+  groupY: 42.0
+  circleSize: 20.0
+  rectRel: 84
+  triRel: 66
+  rectAspect: 1.5
+  triRot: 0
+  overlap: 30
+  fanCount: 9
+  fanSpacing: bottom
+  rowY: 92.0
+  dotSize: 5.0
+  lineWeight: 3
+  hueTri: 8
+  hueRect: 46
+  hueCirc: 214
+  shapeSat: 58
+  shapeLit: 50
+  waveSat: 58
+  waveLit: 48
+  hueDots: 0
+  dotSat: 0
+
+————————————————————————————————————————
+02_a4_sparse.svg
+A4 · 你所定范围的稀疏端（数量、尺寸、重叠、线宽的最小值）
+A4 · sparse end of the ranges you named (minimum counts, sizes, overlap, weight)
+  seed: 1
+  waveCount: 3
+  waveAmplitude: 0.5
+  waveCycles: 2
+  waveBand: 5
+  groupX: 50.0
+  groupY: 42.0
+  circleSize: 14
+  rectRel: 84
+  triRel: 66
+  rectAspect: 1.5
+  triRot: 0
+  overlap: 15
+  fanCount: 5
+  fanSpacing: bottom
+  rowY: 88
+  dotSize: 3
+  lineWeight: 1
+  hueTri: 8
+  hueRect: 46
+  hueCirc: 214
+  shapeSat: 58
+  shapeLit: 50
+  waveSat: 58
+  waveLit: 48
+  hueDots: 0
+  dotSat: 0
+
+————————————————————————————————————————
+03_a4_dense.svg
+A4 · 你所定范围的密集端（数量、尺寸、重叠、线宽的最大值）
+A4 · dense end of the ranges you named (maximum counts, sizes, overlap, weight)
+  seed: 1
+  waveCount: 12
+  waveAmplitude: 4
+  waveCycles: 8
+  waveBand: 25
+  groupX: 50.0
+  groupY: 42.0
+  circleSize: 26
+  rectRel: 84
+  triRel: 66
+  rectAspect: 1.5
+  triRot: 0
+  overlap: 45
+  fanCount: 13
+  fanSpacing: bottom
+  rowY: 96
+  dotSize: 7
+  lineWeight: 6
+  hueTri: 8
+  hueRect: 46
+  hueCirc: 214
+  shapeSat: 58
+  shapeLit: 50
+  waveSat: 58
+  waveLit: 48
+  hueDots: 0
+  dotSat: 0
+
