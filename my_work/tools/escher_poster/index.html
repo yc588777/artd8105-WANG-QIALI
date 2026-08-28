@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ARTD8105 — 福鹤 / Fu He poster</title>
+  <style>
+    :root {
+      --ink: #1c1b19;
+      --muted: #5c5852;
+      --line: #d8d3c8;
+      --panel: #f7f4ee;
+      --paper: #fff;
+      --stage: #cfc8bb;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; }
+    body {
+      font: 13.5px/1.45 "Segoe UI", system-ui, sans-serif;
+      color: var(--ink);
+      background: #e8e4db;
+      display: flex;
+      flex-direction: row;
+    }
+    #stage {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 16px;
+      overflow: auto;
+      background: var(--stage);
+    }
+    #stage:fullscreen, #stage:-webkit-full-screen {
+      background: #1a1814;
+    }
+    canvas#poster {
+      height: min(92vh, 920px);
+      width: auto;
+      max-width: 100%;
+      background: #f3ead8;
+      box-shadow: 0 14px 40px rgba(40, 30, 16, 0.22);
+      display: block;
+    }
+    #stage:fullscreen canvas#poster,
+    #stage:-webkit-full-screen canvas#poster {
+      height: 96vh;
+    }
+    aside#panel {
+      width: 360px;
+      min-width: 360px;
+      height: 100%;
+      overflow: auto;
+      background: var(--panel);
+      border-left: 1px solid var(--line);
+      padding: 18px 16px 48px;
+    }
+    body.panel-off aside#panel { display: none; }
+    #showPanel {
+      display: none;
+      position: fixed;
+      right: 10px;
+      top: 10px;
+      z-index: 5;
+    }
+    body.panel-off #showPanel { display: inline-block; }
+    h1 { font-size: 16px; font-weight: 650; margin: 0 0 4px; }
+    .sub { color: var(--muted); font-size: 12px; margin: 0 0 12px; }
+    .instruction {
+      font-size: 12px;
+      color: var(--muted);
+      border: 1px solid var(--line);
+      padding: 9px 11px;
+      margin-bottom: 12px;
+      background: var(--paper);
+    }
+    fieldset {
+      border: 1px solid var(--line);
+      margin: 0 0 10px;
+      padding: 8px 11px 10px;
+      background: var(--paper);
+    }
+    legend {
+      font-size: 10.5px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 0 4px;
+    }
+    label.row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 4px 10px;
+      align-items: center;
+      margin: 7px 0;
+      font-size: 12.5px;
+    }
+    label.row input[type="range"] { grid-column: 1 / -1; width: 100%; }
+    label.row .val { font-variant-numeric: tabular-nums; color: var(--muted); font-size: 11.5px; }
+    label.check {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin: 7px 0;
+      font-size: 12.5px;
+    }
+    input[type="text"], input[type="number"], select, textarea {
+      width: 100%;
+      font: inherit;
+      padding: 5px 7px;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+    textarea { min-height: 52px; resize: vertical; }
+    input[type="color"] {
+      width: 42px;
+      height: 28px;
+      padding: 0;
+      border: 1px solid var(--line);
+      background: #fff;
+      cursor: pointer;
+    }
+    .colors { display: flex; gap: 12px; align-items: center; margin: 6px 0 8px; }
+    .colors label { display: flex; align-items: center; gap: 6px; font-size: 12.5px; }
+    button {
+      font: inherit;
+      padding: 8px 10px;
+      border: 1px solid var(--ink);
+      background: var(--ink);
+      color: #fff;
+      cursor: pointer;
+    }
+    button.ghost {
+      background: transparent;
+      color: var(--ink);
+    }
+    .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin: 8px 0 6px; }
+    .actions button.wide { grid-column: 1 / -1; }
+    #exportStatus { color: var(--muted); font-size: 11.5px; min-height: 1.2em; margin: 4px 0 0; }
+    .seed-row { display: grid; grid-template-columns: 1fr auto; gap: 6px; margin: 6px 0; }
+  </style>
+</head>
+<body>
+  <main id="stage">
+    <canvas id="poster" width="800" height="1000" aria-label="4:5 poster preview"></canvas>
+  </main>
+  <button type="button" class="ghost" id="showPanel">Parameters</button>
+
+  <aside id="panel">
+    <h1>福鹤 / Fu He</h1>
+    <p class="sub">ARTD8105 · WANG QIALI · 4:5 parametric poster</p>
+    <div class="instruction">
+      Double-click this HTML file to open. Left: live poster. Right: mouse-only controls.
+      Silhouettes are traced from the lucky-bat and crane references, then interpolated by path points.
+      Type is yours to edit — these are placeholders, not an exhibition caption.
+    </div>
+
+    <fieldset>
+      <legend>Colour</legend>
+      <div class="colors">
+        <label>Warm white <input id="paper" type="color" value="#f3ead8" /></label>
+        <label>Black <input id="ink" type="color" value="#14110e" /></label>
+      </div>
+      <label class="check"><input id="invert" type="checkbox" /> Colour inversion</label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Tessellation — count, density, scale, spacing</legend>
+      <label class="row">Bat count <span class="val" data-for="batCount"></span>
+        <input id="batCount" type="range" min="4" max="80" step="1" value="28" />
+      </label>
+      <label class="row">Crane count <span class="val" data-for="craneCount"></span>
+        <input id="craneCount" type="range" min="4" max="80" step="1" value="28" />
+      </label>
+      <label class="row">Density <span class="val" data-for="density"></span>
+        <input id="density" type="range" min="0.2" max="1" step="0.01" value="0.62" />
+      </label>
+      <label class="row">Scale <span class="val" data-for="scale"></span>
+        <input id="scale" type="range" min="0.55" max="1.65" step="0.01" value="1.08" />
+      </label>
+      <label class="row">Spacing <span class="val" data-for="spacing"></span>
+        <input id="spacing" type="range" min="0.7" max="1.45" step="0.01" value="1" />
+      </label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Morph — Sky and Water</legend>
+      <label class="row">Transition position <span class="val" data-for="transitionPos"></span>
+        <input id="transitionPos" type="range" min="0.22" max="0.72" step="0.01" value="0.46" />
+      </label>
+      <label class="row">Transition width <span class="val" data-for="transitionWidth"></span>
+        <input id="transitionWidth" type="range" min="0.08" max="0.55" step="0.01" value="0.32" />
+      </label>
+      <label class="row">Deformation / morph ratio <span class="val" data-for="morphRatio"></span>
+        <input id="morphRatio" type="range" min="0" max="1" step="0.01" value="0.88" />
+      </label>
+      <label class="row">Wing shape <span class="val" data-for="wingShape"></span>
+        <input id="wingShape" type="range" min="0" max="1" step="0.01" value="0.45" />
+      </label>
+      <label class="row">Feather layers <span class="val" data-for="featherLayers"></span>
+        <input id="featherLayers" type="range" min="1" max="12" step="1" value="5" />
+      </label>
+      <label class="row">Ruyi curves (如意) <span class="val" data-for="ruyiCurves"></span>
+        <input id="ruyiCurves" type="range" min="0" max="1" step="0.01" value="0.7" />
+      </label>
+      <label class="row">Figure–ground interlacing <span class="val" data-for="interlace"></span>
+        <input id="interlace" type="range" min="0" max="1" step="0.01" value="0.75" />
+      </label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Print</legend>
+      <label class="check"><input id="outline" type="checkbox" /> Outline</label>
+      <label class="row">Outline weight <span class="val" data-for="outlineW"></span>
+        <input id="outlineW" type="range" min="0.2" max="2.4" step="0.1" value="0.7" />
+      </label>
+      <label class="row">Print texture <span class="val" data-for="printTexture"></span>
+        <input id="printTexture" type="range" min="0" max="1" step="0.01" value="0.42" />
+      </label>
+      <label class="row">Seed <span class="val" data-for="seed"></span></label>
+      <div class="seed-row">
+        <input id="seed" type="number" min="1" step="1" value="8105" />
+        <button type="button" class="ghost" id="randomize">Randomize</button>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Typography</legend>
+      <label class="row">Chinese title
+        <input id="titleZh" type="text" value="福鹤" />
+      </label>
+      <label class="row">English subtitle
+        <input id="subtitleEn" type="text" value="Fu He" />
+      </label>
+      <label class="row">Author
+        <input id="author" type="text" value="汪俏黎 / WANG QIALI" />
+      </label>
+      <label class="row">Description
+        <textarea id="description">Paper-cut tessellation. Edit this description.</textarea>
+      </label>
+      <label class="row">Date (YYYY.MM.DD)
+        <input id="date" type="text" value="" />
+      </label>
+      <label class="row">Title size (% width) <span class="val" data-for="titleSize"></span>
+        <input id="titleSize" type="range" min="3" max="9" step="0.05" value="5.4" />
+      </label>
+      <label class="row">Subtitle size <span class="val" data-for="subSize"></span>
+        <input id="subSize" type="range" min="1.2" max="4" step="0.05" value="2.15" />
+      </label>
+      <label class="row">Body size <span class="val" data-for="bodySize"></span>
+        <input id="bodySize" type="range" min="0.9" max="2.6" step="0.05" value="1.45" />
+      </label>
+      <label class="row">Letter spacing <span class="val" data-for="typeTracking"></span>
+        <input id="typeTracking" type="range" min="0" max="6" step="0.1" value="0.6" />
+      </label>
+      <label class="row">Line spacing <span class="val" data-for="typeLeading"></span>
+        <input id="typeLeading" type="range" min="1" max="1.9" step="0.01" value="1.35" />
+      </label>
+      <label class="row">Type block height (%) <span class="val" data-for="typeBlock"></span>
+        <input id="typeBlock" type="range" min="14" max="28" step="0.1" value="18.5" />
+      </label>
+      <label class="row">Type position / inset (%) <span class="val" data-for="typePad"></span>
+        <input id="typePad" type="range" min="4" max="16" step="0.1" value="7" />
+      </label>
+      <label class="row">Alignment
+        <select id="typeAlign">
+          <option value="left">Left</option>
+          <option value="center" selected>Center</option>
+          <option value="right">Right</option>
+        </select>
+      </label>
+    </fieldset>
+
+    <div class="actions">
+      <button type="button" class="ghost" id="reset">Reset</button>
+      <button type="button" class="ghost" id="hidePanel">Hide panel</button>
+      <button type="button" class="ghost" id="fullscreen">Fullscreen preview</button>
+      <button type="button" class="ghost" id="exportJson">Export JSON</button>
+      <button type="button" class="ghost" id="importBtn">Import JSON</button>
+      <button type="button" id="exportPng" class="wide">Export PNG 2400×3000</button>
+    </div>
+    <input id="importJson" type="file" accept="application/json,.json" hidden />
+    <p id="exportStatus"></p>
+  </aside>
+
+  <script src="paths.js"></script>
+  <script src="poster.js"></script>
+</body>
+</html>
