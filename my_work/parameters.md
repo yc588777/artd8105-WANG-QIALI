@@ -5,6 +5,8 @@
 页面比例是展览条件，不是参数：ISO 竖版，A2 = 420 × 594 mm（与 A4 同比例）。
 Page proportion is a condition of the show, not a parameter: ISO portrait, A2 = 420 × 594 mm (same proportion as A4).
 
+## Version 2 — 波浪线 / 三形 / 扇形
+
 | Parameter | From which phrase | Range | Default | Why this range |
 |---|---|---|---|---|
 | 波浪数量 / Wave count | "parallel wavy lines" | 3–12 | 7 | 少于 3 条形不成明确的色带；多于 12 条上半页过密。<br>Fewer than 3 lines would not create a clear visual band, while more than 12 would make the upper part of the page too dense. |
@@ -73,3 +75,52 @@ Page proportion is a condition of the show, not a parameter: ISO portrait, A2 = 
 ---
 
 ## What I rejected, and why
+
+---
+
+## Version 4 — 不规则相交圆 / irregular intersecting circles
+
+学生决定：范围、默认值参考第一次生成的项目调整。
+The student decided: set ranges and defaults by reference to the first generated project.
+
+页面比例仍是展览条件，不是参数：ISO 竖版，A2 = 420 × 594 mm，10 mm 边距，裁切到页。
+Page proportion remains a condition of the show, not a parameter.
+
+圆与圆的关系是 **相交 / intersect**（Version 4 已去掉 “do not overlap”）。
+The relation between circles is **intersect** (Version 4 dropped “do not overlap”).
+
+标 **推断 / inferred** 的行，是从第一次项目类比过来的，不是你另写的数字。不对就改。
+Rows marked **推断 / inferred** are analogues from the first project, not numbers you wrote yourself. Change them if they are wrong.
+
+| Parameter | From which phrase | Range | Default | Why this range |
+|---|---|---|---|---|
+| 圆的个数 / Circle count | "The canvas is filled" / "medium to high density" | 20–80 | 47 | **推断 / inferred。** 第一次波浪 3–12 默认 7，带子约占页高 15%。铺满整页按同一疏密放大：7 ÷ 0.15 ≈ 47；范围 20–80（3÷0.15 到 12÷0.15）。第一次字面个数 5–13 铺不满 A2。你说参考第一次，所以用疏密类比，不是照抄 7。<br>Student asked to reference the first project. First-project counts (3–12 / 5–13) cannot fill an A2 sheet; this row scales the default wave density (7 marks in ~15% of page height) to the full page. |
+| 最小直径 / Min diameter | "Various sizes" | 页宽 3%–7% | 5% | 参考第一次底列圆直径 / Bottom-row circle diameter。 |
+| 最大直径 / Max diameter | "Various sizes" | 页宽 14%–26% | 20% | 参考第一次主形尺寸（圆） / Main shape size (circle)。每个圆的直径在最小与最大之间由 seed 抽取。<br>Each circle’s diameter is drawn between min and max using the seed. |
+| 相交量 / Intersect amount | "intersect" | 较小形的 15%–45% | 30% | 参考第一次重叠量 / Overlap。这里指轮廓交叉有多深，不是填色遮挡。<br>Analogue of the first-project overlap row, applied to how far outlines cross, not to filled occlusion. |
+| 不规则（椭圆长短轴） / Ellipse aspect | "irregular circles" | 1:1–2:1 | 1.5:1 | **推断 / inferred。** 第一次没有「不规则圆」。类比矩形长宽比 1:1–2:1 默认 1.5:1。每个圆的长短轴比在 1 与该值之间抽取。滑到 1:1 则接近正圆，此时「不平行」几乎看不见。<br>No first-project row for irregular circles. Mapped from rectangle aspect ratio. |
+| 边缘抖动 / Edge jitter | "irregular circles" | 0%–25% | 8% | **推断 / inferred。请确认。** 第一次没有这一项。两端：0% = 光滑椭圆；25% = 边缘明显起伏。不是第一次的数字。<br>No analogue. Two contrasting ends; default is a guess pending your yes/no. |
+| 朝向散布 / Orientation spread | "are not parallel" | 0°–90° | 45° | **推断 / inferred。请确认。** 第一次三角形旋转 −45°–+45°。这里是每个椭圆长轴相对水平线可偏转的最大角度。0° 会让轴平行，违反指令。正圆时旋转几乎看不见。<br>Mapped from triangle rotation range (±45°). Default is a spread, not 0°, because 0° would make axes parallel. |
+| 色相 A / Hue A | "three colors" | 0–360° | 8°（闷红 / muted red） | 参考第一次主形三色。 |
+| 色相 B / Hue B | "three colors" | 0–360° | 46°（闷黄 / muted yellow） | 参考第一次主形三色。 |
+| 色相 C / Hue C | "three colors" | 0–360° | 214°（闷蓝 / muted blue） | 参考第一次主形三色。每个圆由 seed 分到三色之一。<br>Each circle is assigned one of the three hues by the seed. |
+| 饱和度 / Saturation | "three colors" | 40%–80% | 58% | 参考第一次主形饱和度。 |
+| 明度 / Lightness | "three colors" | 35%–75% | 50% | 参考第一次主形明度。 |
+| 线宽 / Line weight | （指令未写 / never mentioned） | 预览 1–6 | 3 | 参考第一次线宽。 |
+| 填色或空心 / Fill vs outline | （指令未写 / never mentioned） | `outline` 或 `fill+outline` | **未选定。** 工具暂用 `outline` | **冲突，请你选。** 第一次主形是填色+描边；手绘参考是空心线。指令要求相交可见。填实会盖住交叉。这不是第一次表里的滑杆，是当时的固定决定，不能当默认照搬。<br>Conflict: first project filled the three shapes; the reference drawing is outline-only. Not a ranged parameter in the first table. You must pick. The tool currently shows outline so intersections stay visible — change the switch if you meant fill. |
+| 背景 / Background | （指令未写 / never mentioned） | 固定 | 米白 / off-white | 参考第一次背景。 |
+| 活区 / Live area | "The canvas is filled" | 固定 | 10 mm 边距以内整块 | 展览条件；指令说铺满。不是滑杆。<br>Exhibition condition; the instruction says the canvas is filled. Not a slider. |
+| 种子 / Seed | （工具要求 / required by the tool） | 整数 | 1 | 同一 seed + 同一组滑杆，永远得到同一张图。<br>Same seed plus the same sliders always gives the same drawing. |
+| 动物形 / Animal-like | "animal-like shapes can be vaguely seen in the picture" | 不执行为画动物 | 不保证 / not guaranteed | 不是步骤。不画动物。随机相交可能形成你认出来的团块，执行方不能保证能看见动物。<br>Not a drawing procedure. No animals are drawn. Pareidolia is not guaranteed. |
+
+### Version 4 仍须你回答 / still needs a yes or no
+
+- **填色或空心 / Fill vs outline** — 二选一。第一次填色；手绘空心。
+- **边缘抖动 8% / Edge jitter 8%** — 第一次没有。要 0%（光滑椭圆）还是要抖动？
+- **朝向散布 45° / Orientation spread 45°** — 第一次是三角 ±45°。这个类比成立吗？
+- **个数 20–80 默认 47** — 是疏密放大，不是照抄 5–13。若你要更稀或更密，改这一行。
+
+### Version 4 指令未写、第一次也未当作滑杆的
+
+- 动物形的画法 — 定为不画、不保证。
+- 页面比例 — 展览规定，不是参数。

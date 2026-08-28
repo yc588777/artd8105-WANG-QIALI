@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ARTD8105 — Version 4 circles</title>
+  <style>
+    :root {
+      --ink: #1c1b19;
+      --muted: #5c5852;
+      --line: #d8d3c8;
+      --panel: #f7f4ee;
+      --paper: #fff;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; }
+    body {
+      font: 14px/1.45 "Segoe UI", system-ui, sans-serif;
+      color: var(--ink);
+      background: #e8e4db;
+      display: flex;
+    }
+    aside {
+      width: 360px;
+      min-width: 360px;
+      height: 100%;
+      overflow: auto;
+      background: var(--panel);
+      border-right: 1px solid var(--line);
+      padding: 20px 18px 40px;
+    }
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      overflow: auto;
+    }
+    h1 { font-size: 16px; font-weight: 650; margin: 0 0 6px; }
+    .sub { color: var(--muted); font-size: 12px; margin: 0 0 16px; }
+    .instruction {
+      font-size: 12px;
+      color: var(--muted);
+      border: 1px solid var(--line);
+      padding: 10px 12px;
+      margin-bottom: 16px;
+      background: var(--paper);
+    }
+    .note {
+      font-size: 11px;
+      color: var(--muted);
+      margin: 0 0 12px;
+    }
+    fieldset {
+      border: 1px solid var(--line);
+      margin: 0 0 12px;
+      padding: 10px 12px 12px;
+      background: var(--paper);
+    }
+    legend { font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); padding: 0 4px; }
+    label.row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 6px 10px;
+      align-items: center;
+      margin: 8px 0;
+      font-size: 13px;
+    }
+    label.row input[type="range"] { grid-column: 1 / -1; width: 100%; }
+    label.row .val { font-variant-numeric: tabular-nums; color: var(--muted); font-size: 12px; }
+    select, input[type="number"] {
+      width: 100%;
+      font: inherit;
+      padding: 4px 6px;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+    .row-seed {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 6px;
+      margin: 8px 0 10px;
+    }
+    button {
+      font: inherit;
+      padding: 8px 10px;
+      border: 1px solid var(--ink);
+      background: var(--ink);
+      color: #fff;
+      cursor: pointer;
+    }
+    button.ghost {
+      background: transparent;
+      color: var(--ink);
+    }
+    .actions { display: grid; gap: 6px; margin: 10px 0 14px; }
+    #valueSheet {
+      font: 11px/1.4 ui-monospace, Consolas, monospace;
+      white-space: pre-wrap;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      padding: 10px;
+      color: var(--muted);
+    }
+    svg#art {
+      height: min(90vh, 920px);
+      width: auto;
+      max-width: 100%;
+      background: #fff;
+      box-shadow: none;
+      border: 1px solid #cfcabe;
+    }
+  </style>
+</head>
+<body>
+  <aside>
+    <h1>Instruction generator · Version 4</h1>
+    <p class="sub">ARTD8105 · WANG QIALI · ISO portrait A2 · 不改 tool.html</p>
+    <div class="instruction" id="instructionText"></div>
+    <p class="note">「隐约能看出动物形」不是画动物。任何像动物的团块都是偶然的，不能保证。</p>
+
+    <div class="actions">
+      <div class="row-seed">
+        <input id="seed" type="number" min="1" step="1" value="1" aria-label="Seed" />
+        <button type="button" class="ghost" id="seedNew">New seed</button>
+        <button type="button" id="download">Download SVG</button>
+      </div>
+    </div>
+
+    <fieldset>
+      <legend>“Various sizes” · “canvas is filled”</legend>
+      <label class="row">圆的个数 / Circle count <span class="val" data-for="circleCount"></span>
+        <input id="circleCount" type="range" min="20" max="80" step="1" value="47" />
+      </label>
+      <label class="row">最小直径 % 页宽 / Min diameter <span class="val" data-for="minSize"></span>
+        <input id="minSize" type="range" min="3" max="7" step="0.1" value="5" />
+      </label>
+      <label class="row">最大直径 % 页宽 / Max diameter <span class="val" data-for="maxSize"></span>
+        <input id="maxSize" type="range" min="14" max="26" step="0.5" value="20" />
+      </label>
+    </fieldset>
+
+    <fieldset>
+      <legend>“irregular circles” · “not parallel” · “intersect”</legend>
+      <label class="row">椭圆长短轴 / Ellipse aspect <span class="val" data-for="aspect"></span>
+        <input id="aspect" type="range" min="1" max="2" step="0.05" value="1.5" />
+      </label>
+      <label class="row">边缘抖动 % / Edge jitter <span class="val" data-for="jitter"></span>
+        <input id="jitter" type="range" min="0" max="25" step="1" value="8" />
+      </label>
+      <label class="row">朝向散布 ° / Orientation spread <span class="val" data-for="angleSpread"></span>
+        <input id="angleSpread" type="range" min="0" max="90" step="1" value="45" />
+      </label>
+      <label class="row">相交量 % / Intersect amount <span class="val" data-for="intersectAmount"></span>
+        <input id="intersectAmount" type="range" min="15" max="45" step="1" value="30" />
+      </label>
+    </fieldset>
+
+    <fieldset>
+      <legend>“three colors” · 线宽 · 空心或填色</legend>
+      <label class="row">色相 A / Hue A <span class="val" data-for="hueA"></span>
+        <input id="hueA" type="range" min="0" max="360" step="1" value="8" />
+      </label>
+      <label class="row">色相 B / Hue B <span class="val" data-for="hueB"></span>
+        <input id="hueB" type="range" min="0" max="360" step="1" value="46" />
+      </label>
+      <label class="row">色相 C / Hue C <span class="val" data-for="hueC"></span>
+        <input id="hueC" type="range" min="0" max="360" step="1" value="214" />
+      </label>
+      <label class="row">饱和度 % / Saturation <span class="val" data-for="sat"></span>
+        <input id="sat" type="range" min="40" max="80" step="1" value="58" />
+      </label>
+      <label class="row">明度 % / Lightness <span class="val" data-for="lit"></span>
+        <input id="lit" type="range" min="35" max="75" step="1" value="50" />
+      </label>
+      <label class="row">线宽 / Line weight <span class="val" data-for="lineWeight"></span>
+        <input id="lineWeight" type="range" min="1" max="6" step="1" value="3" />
+      </label>
+      <label class="row">填色或空心 / Fill vs outline
+        <select id="fillMode">
+          <option value="outline" selected>空心线 / outline only（暂用，请确认）</option>
+          <option value="fill">填色+描边 / fill + outline（第一次主形）</option>
+        </select>
+      </label>
+    </fieldset>
+
+    <p class="sub">Values at export — copy onto the wall label</p>
+    <div id="valueSheet"></div>
+  </aside>
+
+  <main>
+    <svg id="art" width="420mm" height="594mm" viewBox="0 0 420 594" xmlns="http://www.w3.org/2000/svg"></svg>
+  </main>
+
+  <script>
+    const PAGE_W = 420;
+    const PAGE_H = 594;
+    const MARGIN = 10;
+    const PAPER = "#f3f0e8";
+    const CHARCOAL = "#2a2a28";
+    const PATH_STEPS = 48;
+
+    const INSTRUCTION =
+      "Various sizes of irregular circles intersect and are not parallel. They are in three colors, and animal-like shapes can be vaguely seen in the picture. The canvas is filled with free and random circles at medium to high density.";
+
+    document.getElementById("instructionText").textContent = INSTRUCTION;
+
+    const ids = [
+      "seed", "circleCount", "minSize", "maxSize",
+      "aspect", "jitter", "angleSpread", "intersectAmount",
+      "hueA", "hueB", "hueC", "sat", "lit", "lineWeight", "fillMode"
+    ];
+
+    function $(id) { return document.getElementById(id); }
+    function num(id) { return Number($(id).value); }
+
+    // Same seed always gives the same drawing.
+    function mulberry32(seed) {
+      let a = seed >>> 0;
+      return function () {
+        a |= 0;
+        a = (a + 0x6d2b79f5) | 0;
+        let t = Math.imul(a ^ (a >>> 15), 1 | a);
+        t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+      };
+    }
+
+    function hsl(h, s, l) {
+      return `hsl(${h} ${s}% ${l}%)`;
+    }
+
+    function fmt(id) {
+      const el = $(id);
+      const span = document.querySelector(`[data-for="${id}"]`);
+      if (!span) return;
+      const v = el.value;
+      if (id === "aspect") span.textContent = Number(v).toFixed(2) + ":1";
+      else if (["minSize", "maxSize"].includes(id)) span.textContent = Number(v).toFixed(1);
+      else span.textContent = v;
+    }
+
+    function meanRadius(rx, ry) {
+      return (rx + ry) / 2;
+    }
+
+    function ellipsePath(cx, cy, rx, ry, rotationDeg, jitterScales) {
+      // "irregular circles" → ellipse, optional edge jitter
+      const rot = rotationDeg * Math.PI / 180;
+      const cos = Math.cos(rot);
+      const sin = Math.sin(rot);
+      let d = "";
+      for (let i = 0; i <= PATH_STEPS; i++) {
+        const t = (i % PATH_STEPS) / PATH_STEPS * Math.PI * 2;
+        const j = jitterScales[i % PATH_STEPS];
+        const x = Math.cos(t) * rx * j;
+        const y = Math.sin(t) * ry * j;
+        const xr = cx + x * cos - y * sin;
+        const yr = cy + x * sin + y * cos;
+        d += (i === 0 ? "M " : " L ") + xr.toFixed(3) + " " + yr.toFixed(3);
+      }
+      return d + " Z";
+    }
+
+    function makeJitterScales(jitterPct, rand) {
+      const j = jitterPct / 100;
+      const scales = [];
+      for (let i = 0; i < PATH_STEPS; i++) {
+        scales.push(1 + (rand() * 2 - 1) * j);
+      }
+      return scales;
+    }
+
+    function readParams() {
+      const seed = Math.max(1, Math.floor(num("seed")) || 1);
+      let minSize = num("minSize");
+      let maxSize = num("maxSize");
+      if (minSize > maxSize) {
+        const swap = minSize;
+        minSize = maxSize;
+        maxSize = swap;
+      }
+      return {
+        seed,
+        circleCount: Math.round(num("circleCount")),
+        minSize,
+        maxSize,
+        aspect: num("aspect"),
+        jitter: num("jitter"),
+        angleSpread: num("angleSpread"),
+        intersectAmount: num("intersectAmount"),
+        hueA: num("hueA"),
+        hueB: num("hueB"),
+        hueC: num("hueC"),
+        sat: num("sat"),
+        lit: num("lit"),
+        lineWeight: Math.round(num("lineWeight")),
+        fillMode: $("fillMode").value
+      };
+    }
+
+    function placeEllipses(p, rand) {
+      // "The canvas is filled with free and random circles at medium to high density."
+      const items = [];
+      const liveLeft = MARGIN;
+      const liveTop = MARGIN;
+      const liveRight = PAGE_W - MARGIN;
+      const liveBottom = PAGE_H - MARGIN;
+
+      for (let i = 0; i < p.circleCount; i++) {
+        // "Various sizes"
+        const diameter = PAGE_W * (p.minSize + rand() * (p.maxSize - p.minSize)) / 100;
+        // "irregular circles" → aspect between 1 and the slider
+        const aspect = 1 + rand() * (p.aspect - 1);
+        const rx = diameter / 2;
+        const ry = rx / aspect;
+        // "are not parallel" → axis rotation within ± spread
+        const rotationDeg = (rand() * 2 - 1) * p.angleSpread;
+        const hueIndex = Math.floor(rand() * 3);
+        const jitterScales = makeJitterScales(p.jitter, rand);
+
+        let cx;
+        let cy;
+        const attach = items.length > 0 && rand() > 0.32;
+        if (attach) {
+          // "intersect" → place so outlines cross by intersectAmount of the smaller mean radius
+          const other = items[Math.floor(rand() * items.length)];
+          const rNew = meanRadius(rx, ry);
+          const rOld = meanRadius(other.rx, other.ry);
+          const smaller = Math.min(rNew, rOld);
+          const dist = rNew + rOld - smaller * (p.intersectAmount / 100);
+          const a = rand() * Math.PI * 2;
+          cx = other.cx + Math.cos(a) * dist;
+          cy = other.cy + Math.sin(a) * dist;
+        } else {
+          cx = liveLeft + rand() * (liveRight - liveLeft);
+          cy = liveTop + rand() * (liveBottom - liveTop);
+        }
+
+        cx = Math.min(liveRight, Math.max(liveLeft, cx));
+        cy = Math.min(liveBottom, Math.max(liveTop, cy));
+
+        items.push({ cx, cy, rx, ry, rotationDeg, hueIndex, jitterScales });
+      }
+      return items;
+    }
+
+    function draw() {
+      ids.forEach(fmt);
+      const p = readParams();
+      const rand = mulberry32(p.seed);
+      const strokeMm = p.lineWeight * 0.3;
+      const hues = [p.hueA, p.hueB, p.hueC];
+      const items = placeEllipses(p, rand);
+
+      const paths = items.map((el) => {
+        const color = hsl(hues[el.hueIndex], p.sat, p.lit);
+        const d = ellipsePath(el.cx, el.cy, el.rx, el.ry, el.rotationDeg, el.jitterScales);
+        if (p.fillMode === "fill") {
+          return `<path d="${d}" fill="${color}" stroke="${CHARCOAL}" stroke-width="${strokeMm * 0.7}"/>`;
+        }
+        return `<path d="${d}" fill="none" stroke="${color}" stroke-width="${strokeMm}"/>`;
+      }).join("");
+
+      const svg = $("art");
+      svg.innerHTML = `
+        <title>ARTD8105 Version 4 irregular circles</title>
+        <desc>${INSTRUCTION.replace(/</g, "")}</desc>
+        <defs>
+          <clipPath id="pageClip">
+            <rect x="0" y="0" width="${PAGE_W}" height="${PAGE_H}"/>
+          </clipPath>
+          <clipPath id="marginClip">
+            <rect x="${MARGIN}" y="${MARGIN}" width="${PAGE_W - MARGIN * 2}" height="${PAGE_H - MARGIN * 2}"/>
+          </clipPath>
+        </defs>
+        <g clip-path="url(#pageClip)">
+          <rect x="0" y="0" width="${PAGE_W}" height="${PAGE_H}" fill="${PAPER}"/>
+          <g clip-path="url(#marginClip)">
+            ${paths}
+          </g>
+        </g>
+      `;
+
+      $("valueSheet").textContent = [
+        `instruction: version 4`,
+        `seed: ${p.seed}`,
+        `circleCount: ${p.circleCount}`,
+        `minSize: ${p.minSize}% width  maxSize: ${p.maxSize}% width`,
+        `aspect: ${p.aspect.toFixed(2)}:1  jitter: ${p.jitter}%`,
+        `angleSpread: ${p.angleSpread}°  intersectAmount: ${p.intersectAmount}%`,
+        `hues: ${p.hueA}/${p.hueB}/${p.hueC}  sat ${p.sat}%  lit ${p.lit}%`,
+        `lineWeight: ${p.lineWeight} (${strokeMm.toFixed(2)} mm)`,
+        `fillMode: ${p.fillMode}`,
+        `animal-like: not drawn, not guaranteed`,
+        `page: A2 420×594 mm portrait, 10 mm margin`
+      ].join("\n");
+    }
+
+    function applyQuery() {
+      const q = new URLSearchParams(location.search);
+      ids.forEach((id) => {
+        if (q.has(id)) $(id).value = q.get(id);
+      });
+    }
+
+    function svgFileText() {
+      const svg = $("art").cloneNode(true);
+      svg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+      svg.setAttribute("width", "420mm");
+      svg.setAttribute("height", "594mm");
+      const comment = document.createComment("\n" + $("valueSheet").textContent + "\n");
+      svg.insertBefore(comment, svg.firstChild);
+      return '<?xml version="1.0" encoding="UTF-8"?>\n' + svg.outerHTML;
+    }
+
+    ids.forEach((id) => $(id).addEventListener("input", draw));
+    $("seedNew").addEventListener("click", () => {
+      $("seed").value = String(1 + Math.floor(Math.random() * 9998));
+      draw();
+    });
+    $("download").addEventListener("click", () => {
+      const p = readParams();
+      const blob = new Blob([svgFileText()], { type: "image/svg+xml" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = `wang-qiali_circles_seed-${p.seed}_n-${p.circleCount}.svg`;
+      a.click();
+      URL.revokeObjectURL(a.href);
+    });
+
+    applyQuery();
+    draw();
+
+    if (new URLSearchParams(location.search).get("bare") === "1") {
+      document.documentElement.innerHTML = svgFileText().replace(/^<\?xml[^>]*>\s*/u, "");
+    }
+  </script>
+</body>
+</html>
