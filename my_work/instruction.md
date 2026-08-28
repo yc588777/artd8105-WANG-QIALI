@@ -15,3 +15,10 @@ An array of multiple lines, evenly spaced, extending from the lowest point of th
 Various sizes of irregular circles intersect, do not overlap, and are not parallel. They are in three colors, and animal-like shapes can be vaguely seen in the picture. The canvas is filled with free and random circles at medium to high density.
 
 2026-08-28：手绘仅作参考，不是对上文措辞的改写。照片：`my_work/process_journal/2026-08-28_circle-instruction-hand-drawing.png`
+
+## Version 4
+
+Various sizes of irregular circles intersect and are not parallel. They are in three colors, and animal-like shapes can be vaguely seen in the picture. The canvas is filled with free and random circles at medium to high density.
+
+去掉了 “do not overlap”，圆与圆的关系只保留相交；其余措辞不变。
+Removed “do not overlap”; intersecting remains the only stated relation between circles. The rest of the wording is unchanged.
