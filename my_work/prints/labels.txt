@@ -1,121 +1,120 @@
-ARTD8105 · Session 2 prints
+ARTD8105 · Session 2 · 展签 / wall label
+截止 / due：2026-08-30 18:00　印刷 / printing：Monday 31 August · A3
+迟交不进展览。 / Late means not in the show.
 
-标题 / Title
-平行波线、重叠三形、底边扇形
-Parallel waves, overlapping shapes, bottom fan
-（描述性暂用题，不是诗意命名。若要改展签标题，告诉我你的题目。）
-(Descriptive working title, not a poetic name. Say if you want a different wall-label title.)
+————————————————————————————————————————
+指令 / Instruction
 
-作者 / Name
+蝠–鹤参数海报。纸上每一笔均来自生成器 `my_work/tools/escher_poster/index.html`（双击打开；导出 PNG 2400×3000）。
+程序：4:5 竖幅；暖白纸色与近黑墨色；剪纸蝠、鹤轮廓按路径点插值变形（致敬埃舍尔 Sky and Water 式图底转换）；行位决定蝠→鹤的变形程度；密度、过渡位置、过渡宽度、变形比、色彩反转等滑杆决定这一张在参数空间中的位置；底部文字为中英标题、作者、致敬行与日期。
+
+Bat–crane parametric poster. Every mark on the sheet comes from `my_work/tools/escher_poster/index.html` (open by double-click; export PNG 2400×3000).
+Procedure: 4:5 portrait; warm paper and near-black ink; cut-paper bat and crane silhouettes interpolated by path points (Sky-and-Water figure–ground); row position drives bat→crane morph; sliders (density, transition, morph, inversion, etc.) place each sheet in the parameter space; type block holds bilingual title, name, homage line, and date.
+
+姓名 / Name
 汪俏黎
 WANG QIALI
 
-指令版本 / Instruction version
-Version 2
+印刷规格 / Intended print size
+A3 竖版 297 × 420 mm。周一印刷用这三张。
+A3 portrait 297 × 420 mm. Monday printing uses these three files.
+生成器内部画幅为 4:5（导出 2400×3000）。本次提交的 JPG 为对话压缩副本，像素 724 × 1024，比例已接近 ISO 1:√2，印刷时铺满 A3。未找到本机更高分辨率原导出。
+The generator’s native frame is 4:5 (export 2400×3000). These JPGs are the chat-compressed copies of the three chosen frames, 724 × 1024, already near ISO 1:√2 — print full-bleed on A3. No higher-resolution original export was found on this machine.
 
 后处理 / Post-processing
-无。纸上每一笔都来自生成器。
-None. Every mark on the sheet comes from the generator.
+无额外绘制、贴图或调色。三张均为生成器画面，经对话上传存为 JPG（压缩到约 70–107 KB）。未见摄影、扫描或手工叠加。
+No further drawing, collage, or colour grading. The three sheets are generator frames, saved as JPEG through chat upload (compressed to about 70–107 KB). No photography, scanning, or hand overlay.
 
-说明 / Note
-三张图是同一 seed（1）下、你已写下的范围的三个位置：默认 / 最小 / 最大。
-不是另选的“好看”组合。若你不要其中一张，指出要换哪一端。
-Three sheets, same seed (1), three positions in the ranges you already named: default / minimum / maximum.
-Not a taste selection. If you reject one, say which end to replace.
+参数来源 / Source of parameter values
+未找到生成器 Export JSON。下列除海报上可读的文字、反转、纸墨色外，其余滑杆为对照画面的重建，标为「重建」。seed 无法从画面唯一还原，故不伪造。
+No Export JSON was found. Values readable on the posters (type, inversion, paper/ink) are recorded as seen. Remaining sliders are reconstructed from the images and marked 重建 / reconstructed. Seed cannot be uniquely recovered; it is not invented.
 
 ————————————————————————————————————————
-01_a2_default.svg
-A2 · 你写下的默认值（参数空间的中心）
-A2 · your stated defaults (centre of the parameter space)
-  seed: 1
-  waveCount: 7
-  waveAmplitude: 2.0
-  waveCycles: 4
-  waveBand: 15.0
-  groupX: 50.0
-  groupY: 42.0
-  circleSize: 20.0
-  rectRel: 84
-  triRel: 66
-  rectAspect: 1.5
-  triRot: 0
-  overlap: 30
-  fanCount: 9
-  fanSpacing: bottom
-  rowY: 92.0
-  dotSize: 5.0
-  lineWeight: 3
-  hueTri: 8
-  hueRect: 46
-  hueCirc: 214
-  shapeSat: 58
-  shapeLit: 50
-  waveSat: 58
-  waveLit: 48
-  hueDots: 0
-  dotSat: 0
+本次提交 / This submission（截止作业 / the due work）
+
+三张 A3：参数空间的三个不同点。
+Three A3 prints from three different points in the parameter space.
+
+01 稀疏 / sparse — 一息万象
+02 过渡带加密、下端收束 / dense mid-band, tapering — 相生无界
+03 色彩反转、过渡靠上、簇状锯齿 / inverted, high transition, jagged cluster — 玄白之间
+
+共同项（三张可见 / shared, read from the posters）
+  paper: #f3ead8（暖白 / warm white）
+  ink: #14110e（近黑 / near-black）
+  author: 汪俏黎 / WANG QIALI
+  description: Homage to Moritz Cornelius Escher
+  date: 2026.08.29
+  typeAlign: center
+  outline: false（重建 / reconstructed：未见描边滑杆打开）
+  printTexture: 0.42（重建 / reconstructed：米白区可见纸纹，接近生成器默认）
 
 ————————————————————————————————————————
-02_a4_sparse.svg
-A4 · 你所定范围的稀疏端（数量、尺寸、重叠、线宽的最小值）
-A4 · sparse end of the ranges you named (minimum counts, sizes, overlap, weight)
-  seed: 1
-  waveCount: 3
-  waveAmplitude: 0.5
-  waveCycles: 2
-  waveBand: 5
-  groupX: 50.0
-  groupY: 42.0
-  circleSize: 14
-  rectRel: 84
-  triRel: 66
-  rectAspect: 1.5
-  triRot: 0
-  overlap: 15
-  fanCount: 5
-  fanSpacing: bottom
-  rowY: 88
-  dotSize: 3
-  lineWeight: 1
-  hueTri: 8
-  hueRect: 46
-  hueCirc: 214
-  shapeSat: 58
-  shapeLit: 50
-  waveSat: 58
-  waveLit: 48
-  hueDots: 0
-  dotSat: 0
+01_a3_all-forms-in-one-breath.jpg
+A3 · 一息万象 / ALL FORMS IN ONE BREATH
+参数空间的稀疏端：过渡约在画面中部，蝠在上、鹤在下，数量少、留白多。
+Sparse end of the space: split near mid-field; black bats on cream, white cranes on black; few figures, much ground.
+
+  invert: false
+  titleZh: 一息万象
+  subtitleEn: ALL FORMS IN ONE BREATH
+  density: 0.24　　重建 / reconstructed
+  batCount: 10　　重建 / reconstructed
+  craneCount: 10　　重建 / reconstructed
+  transitionPos: 0.42　　重建 / reconstructed（奶油约上 40%，黑在下）
+  transitionWidth: 0.30　　重建 / reconstructed
+  morphRatio: 0.88　　重建 / reconstructed
+  spacing: 1.18　　重建 / reconstructed
+  scale: 1.15　　重建 / reconstructed
+  interlace: 0.08　　重建 / reconstructed（图底几乎不交错）
+  seed: （未知 / unknown — 未导出）
 
 ————————————————————————————————————————
-03_a4_dense.svg
-A4 · 你所定范围的密集端（数量、尺寸、重叠、线宽的最大值）
-A4 · dense end of the ranges you named (maximum counts, sizes, overlap, weight)
-  seed: 1
-  waveCount: 12
-  waveAmplitude: 4
-  waveCycles: 8
-  waveBand: 25
-  groupX: 50.0
-  groupY: 42.0
-  circleSize: 26
-  rectRel: 84
-  triRel: 66
-  rectAspect: 1.5
-  triRot: 0
-  overlap: 45
-  fanCount: 13
-  fanSpacing: bottom
-  rowY: 96
-  dotSize: 7
-  lineWeight: 6
-  hueTri: 8
-  hueRect: 46
-  hueCirc: 214
-  shapeSat: 58
-  shapeLit: 50
-  waveSat: 58
-  waveLit: 48
-  hueDots: 0
-  dotSat: 0
+02_a3_boundless-co-emergence.jpg
+A3 · 相生无界 / BOUNDLESS CO-EMERGENCE
+过渡带加密：上方成排黑蝠，中段变形，下方白鹤逐渐疏到一只。
+Dense mid-band: rows of black bats above, morph in the grey, white cranes taper to a single figure below.
 
+  invert: false
+  titleZh: 相生无界
+  subtitleEn: BOUNDLESS CO-EMERGENCE
+  density: 0.78　　重建 / reconstructed
+  batCount: 40　　重建 / reconstructed
+  craneCount: 20　　重建 / reconstructed（下端明显少于上端）
+  transitionPos: 0.38　　重建 / reconstructed（分界偏上）
+  transitionWidth: 0.28　　重建 / reconstructed
+  morphRatio: 0.90　　重建 / reconstructed
+  spacing: 0.92　　重建 / reconstructed
+  scale: 1.00　　重建 / reconstructed
+  interlace: 0.50　　重建 / reconstructed
+  seed: （未知 / unknown — 未导出）
+
+————————————————————————————————————————
+03_a3_between-black-and-white.jpg
+A3 · 玄白之间 / BETWEEN BLACK AND WHITE
+色彩反转打开：顶带黑底白鹤，下方米白底黑蝠；图形收成向下的锯齿簇。文字为米白底黑字。
+Colour inversion on: white cranes on a black top band, black bats on cream; cluster tapers into a jagged V. Type is black on cream.
+
+  invert: true
+  titleZh: 玄白之间
+  subtitleEn: BETWEEN BLACK AND WHITE
+  density: 0.70　　重建 / reconstructed
+  batCount: 36　　重建 / reconstructed
+  craneCount: 28　　重建 / reconstructed
+  transitionPos: 0.22　　重建 / reconstructed（滑杆下限附近；黑带约在顶五分之一）
+  transitionWidth: 0.16　　重建 / reconstructed
+  morphRatio: 0.75　　重建 / reconstructed
+  spacing: 0.88　　重建 / reconstructed
+  scale: 0.95　　重建 / reconstructed
+  interlace: 0.15　　重建 / reconstructed
+  seed: （未知 / unknown — 未导出）
+
+其余滑杆（wingShape、featherLayers、ruyiCurves、outlineW、titleSize、subSize、bodySize、typeTracking、typeLeading、typeBlock、typePad）画面上无法精确读出，按生成器默认，不当作这三张的已证实设定。
+Remaining sliders cannot be read precisely from the pictures; generator defaults are assumed and are not claimed as confirmed settings for these three sheets.
+
+————————————————————————————————————————
+此前文件 / Earlier files kept in this folder
+
+01_a2_default.svg · 02_a4_sparse.svg · 03_a4_dense.svg
+第一次波浪线生成器的 A2/A4 证据，保留不删。不是本次截止要交的三张。
+Earlier A2/A4 sheets from the first (wavy-line) generator. Kept as evidence. Not the three sheets due for this deadline.
