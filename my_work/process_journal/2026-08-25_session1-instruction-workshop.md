@@ -68,7 +68,11 @@ The two trigger phrases in version one:
 
 ## 4 · the boring region
 
-（未填——须由学生写：指令里哪些细节可以走不同方向而你并不在意？）
+线的方向、线的粗细、线的疏密、颜色的搭配。
+
+这四项可以走不同方向而我不在意：圆线朝哪个方向画、线条画得多粗或多细、某一局部是密是疏、三种颜色具体选哪三种——这些变化不会让结果越出我想要的范围。
+
+The boring region: direction of the loops, thickness of the lines, local density variation, and which specific three colours are chosen. These can vary freely without changing anything I care about in the result.
 
 ---
 
@@ -82,7 +86,11 @@ In round one, execution A's jack-o'-lantern and multi-animal spread was unexpect
 
 ## 6 · the breaking point
 
-（未填——须由学生写：怎样的结果会完全不算一次有效执行？）
+看不出任何动物造型；或者用的不是圆形的线。
+
+两个条件只要触犯其中一个，结果就不算有效执行：第一，画面里完全看不到任何动物的造型（即使只是隐约的）；第二，线条不是圆的——比如全用直线、折线或点。
+
+Two conditions, either of which breaks validity: first, no animal shape is visible at all — not even faintly; second, the lines are not circular — straight lines, zigzags, or dots would all fail.
 
 ---
 
